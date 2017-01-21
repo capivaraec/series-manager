@@ -7,6 +7,6 @@ target 'SeriesManager' do
 
   # Pods for SeriesManager
 
-  pod 'Alamofire', '~> 4.3'
+  pod 'AFNetworking', '~> 3.0'
 
 end
