@@ -41,6 +41,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+        // you should probably first check if this is the callback being opened
+        if url.absoluteString.hasPrefix("cec-series://callback") {
+            // if your oauth2 instance lives somewhere else, adapt accordingly
+//            oauth2.handleRedirectURL(url)
+        }
+
+        return true
+    }
 
 }
 
