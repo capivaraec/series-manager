@@ -7,15 +7,40 @@
 //
 
 import UIKit
+import AppController
+import Locksmith
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    let appController: AppController = {
+
+        let mainStoryboard = UIStoryboard(name:"Main", bundle:nil)
+
+        let controller = AppController(loginInterfaceProvider: { mainStoryboard.instantiateInitialViewController()! },
+                                       mainInterfaceProvider: { mainStoryboard.instantiateViewController(withIdentifier: "tabBarController") })
+        controller.isLoggedInBlock = {
+            return Locksmith.loadDataForUserAccount(userAccount: "SeriesManagerAccount") != nil
+        }
+
+        controller.didLogoutBlock = {
+            try? Locksmith.deleteDataForUserAccount(userAccount: "SeriesManagerAccount")
+        }
+
+        controller.didLoginBlock = {
+        }
+        return controller
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        appController.application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = appController.rootViewController
+        window?.makeKeyAndVisible()
         return true
     }
 

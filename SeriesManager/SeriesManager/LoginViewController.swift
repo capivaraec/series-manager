@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AppController
+import Locksmith
 
 class LoginViewController: UIViewController, UIWebViewDelegate {
 
@@ -83,13 +85,10 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
                 do {
                     let dataDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String : Any]
 
-                    let accessToken = dataDictionary["access_token"] as! String
-
-                    UserDefaults.standard.set(accessToken, forKey: "CSMAccessToken")
-                    UserDefaults.standard.synchronize()
+                    try Locksmith.updateData(data: dataDictionary, forUserAccount: "SeriesManagerAccount")
 
                     DispatchQueue.main.async {
-                        self.dismiss(animated: true, completion: nil)
+                        AppController.didLogin()
                     }
                 } catch {
                     print("Could not convert JSON data into a dictionary.")

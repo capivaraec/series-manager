@@ -14,6 +14,11 @@
 		BE8E98071E339EA90073BA5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE8E98061E339EA90073BA5C /* Assets.xcassets */; };
 		BE8E980A1E339EA90073BA5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE8E98081E339EA90073BA5C /* LaunchScreen.storyboard */; };
 		BE8E98151E339EAA0073BA5C /* SeriesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E98141E339EAA0073BA5C /* SeriesManagerTests.swift */; };
+		BE90D54E1E3416A00024CE8F /* SeriesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */; };
+		BE90D5501E34D3A00024CE8F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D54F1E34D3A00024CE8F /* Calendar.swift */; };
+		BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5511E34D96D0024CE8F /* Episode.swift */; };
+		BE90D5541E34DA710024CE8F /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5531E34DA710024CE8F /* Show.swift */; };
+		BE90D5561E34DAC80024CE8F /* Ids.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5551E34DAC80024CE8F /* Ids.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +46,11 @@
 		BE8E98101E339EAA0073BA5C /* SeriesManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeriesManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8E98141E339EAA0073BA5C /* SeriesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesManagerTests.swift; sourceTree = "<group>"; };
 		BE8E98161E339EAA0073BA5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewController.swift; sourceTree = "<group>"; };
+		BE90D54F1E34D3A00024CE8F /* Calendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		BE90D5511E34D96D0024CE8F /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		BE90D5531E34DA710024CE8F /* Show.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
+		BE90D5551E34DAC80024CE8F /* Ids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ids.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +110,11 @@
 				BE8E98061E339EA90073BA5C /* Assets.xcassets */,
 				BE8E98081E339EA90073BA5C /* LaunchScreen.storyboard */,
 				BE8E980B1E339EA90073BA5C /* Info.plist */,
+				BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */,
+				BE90D54F1E34D3A00024CE8F /* Calendar.swift */,
+				BE90D5511E34D96D0024CE8F /* Episode.swift */,
+				BE90D5531E34DA710024CE8F /* Show.swift */,
+				BE90D5551E34DAC80024CE8F /* Ids.swift */,
 			);
 			path = SeriesManager;
 			sourceTree = "<group>";
@@ -277,8 +292,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE90D5541E34DA710024CE8F /* Show.swift in Sources */,
 				BE8E98021E339EA80073BA5C /* LoginViewController.swift in Sources */,
 				BE8E98001E339EA80073BA5C /* AppDelegate.swift in Sources */,
+				BE90D5501E34D3A00024CE8F /* Calendar.swift in Sources */,
+				BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */,
+				BE90D5561E34DAC80024CE8F /* Ids.swift in Sources */,
+				BE90D54E1E3416A00024CE8F /* SeriesListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
