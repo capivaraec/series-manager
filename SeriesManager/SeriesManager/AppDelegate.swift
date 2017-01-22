@@ -22,11 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let controller = AppController(loginInterfaceProvider: { mainStoryboard.instantiateInitialViewController()! },
                                        mainInterfaceProvider: { mainStoryboard.instantiateViewController(withIdentifier: "tabBarController") })
         controller.isLoggedInBlock = {
-            return Locksmith.loadDataForUserAccount(userAccount: "SeriesManagerAccount") != nil
+            return Configuration.getAccessToken() != nil
         }
 
         controller.didLogoutBlock = {
-            try? Locksmith.deleteDataForUserAccount(userAccount: "SeriesManagerAccount")
+            Configuration.revokeAuthorization()
         }
 
         controller.didLoginBlock = {

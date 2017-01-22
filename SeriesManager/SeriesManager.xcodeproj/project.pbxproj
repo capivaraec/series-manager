@@ -19,6 +19,10 @@
 		BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5511E34D96D0024CE8F /* Episode.swift */; };
 		BE90D5541E34DA710024CE8F /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5531E34DA710024CE8F /* Show.swift */; };
 		BE90D5561E34DAC80024CE8F /* Ids.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5551E34DAC80024CE8F /* Ids.swift */; };
+		BE90D5591E34F50B0024CE8F /* CalendarCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5571E34F50B0024CE8F /* CalendarCellTableViewCell.swift */; };
+		BE90D55A1E34F50B0024CE8F /* CalendarCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE90D5581E34F50B0024CE8F /* CalendarCellTableViewCell.xib */; };
+		BE90D5631E3518A30024CE8F /* RestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5621E3518A30024CE8F /* RestAPI.swift */; };
+		BE90D5651E3518EE0024CE8F /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5641E3518EE0024CE8F /* Configuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		BE90D5511E34D96D0024CE8F /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		BE90D5531E34DA710024CE8F /* Show.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		BE90D5551E34DAC80024CE8F /* Ids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ids.swift; sourceTree = "<group>"; };
+		BE90D5571E34F50B0024CE8F /* CalendarCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCellTableViewCell.swift; sourceTree = "<group>"; };
+		BE90D5581E34F50B0024CE8F /* CalendarCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarCellTableViewCell.xib; sourceTree = "<group>"; };
+		BE90D5621E3518A30024CE8F /* RestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestAPI.swift; sourceTree = "<group>"; };
+		BE90D5641E3518EE0024CE8F /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,17 +112,14 @@
 		BE8E97FE1E339EA80073BA5C /* SeriesManager */ = {
 			isa = PBXGroup;
 			children = (
-				BE8E97FF1E339EA80073BA5C /* AppDelegate.swift */,
-				BE8E98011E339EA80073BA5C /* LoginViewController.swift */,
-				BE8E98031E339EA90073BA5C /* Main.storyboard */,
-				BE8E98061E339EA90073BA5C /* Assets.xcassets */,
+				BE90D5611E35187F0024CE8F /* RestAPI */,
+				BE90D5601E3518660024CE8F /* Models */,
+				BE90D55F1E3518420024CE8F /* Views */,
+				BE90D55E1E3518290024CE8F /* Controllers */,
+				BE90D55D1E35181D0024CE8F /* BusinessLayer */,
+				BE90D55C1E3518050024CE8F /* Resources */,
+				BE90D55B1E3517EE0024CE8F /* Application */,
 				BE8E98081E339EA90073BA5C /* LaunchScreen.storyboard */,
-				BE8E980B1E339EA90073BA5C /* Info.plist */,
-				BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */,
-				BE90D54F1E34D3A00024CE8F /* Calendar.swift */,
-				BE90D5511E34D96D0024CE8F /* Episode.swift */,
-				BE90D5531E34DA710024CE8F /* Show.swift */,
-				BE90D5551E34DAC80024CE8F /* Ids.swift */,
 			);
 			path = SeriesManager;
 			sourceTree = "<group>";
@@ -126,6 +131,69 @@
 				BE8E98161E339EAA0073BA5C /* Info.plist */,
 			);
 			path = SeriesManagerTests;
+			sourceTree = "<group>";
+		};
+		BE90D55B1E3517EE0024CE8F /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				BE8E97FF1E339EA80073BA5C /* AppDelegate.swift */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		BE90D55C1E3518050024CE8F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE8E980B1E339EA90073BA5C /* Info.plist */,
+				BE8E98061E339EA90073BA5C /* Assets.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		BE90D55D1E35181D0024CE8F /* BusinessLayer */ = {
+			isa = PBXGroup;
+			children = (
+				BE90D5641E3518EE0024CE8F /* Configuration.swift */,
+			);
+			name = BusinessLayer;
+			sourceTree = "<group>";
+		};
+		BE90D55E1E3518290024CE8F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */,
+				BE8E98011E339EA80073BA5C /* LoginViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		BE90D55F1E3518420024CE8F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BE90D5571E34F50B0024CE8F /* CalendarCellTableViewCell.swift */,
+				BE90D5581E34F50B0024CE8F /* CalendarCellTableViewCell.xib */,
+				BE8E98031E339EA90073BA5C /* Main.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BE90D5601E3518660024CE8F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BE90D54F1E34D3A00024CE8F /* Calendar.swift */,
+				BE90D5511E34D96D0024CE8F /* Episode.swift */,
+				BE90D5531E34DA710024CE8F /* Show.swift */,
+				BE90D5551E34DAC80024CE8F /* Ids.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		BE90D5611E35187F0024CE8F /* RestAPI */ = {
+			isa = PBXGroup;
+			children = (
+				BE90D5621E3518A30024CE8F /* RestAPI.swift */,
+			);
+			name = RestAPI;
 			sourceTree = "<group>";
 		};
 		D5CCFAD8AEE7915C9D9F2C6B /* Pods */ = {
@@ -227,6 +295,7 @@
 				BE8E980A1E339EA90073BA5C /* LaunchScreen.storyboard in Resources */,
 				BE8E98071E339EA90073BA5C /* Assets.xcassets in Resources */,
 				BE8E98051E339EA90073BA5C /* Main.storyboard in Resources */,
+				BE90D55A1E34F50B0024CE8F /* CalendarCellTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,10 +364,13 @@
 				BE90D5541E34DA710024CE8F /* Show.swift in Sources */,
 				BE8E98021E339EA80073BA5C /* LoginViewController.swift in Sources */,
 				BE8E98001E339EA80073BA5C /* AppDelegate.swift in Sources */,
+				BE90D5631E3518A30024CE8F /* RestAPI.swift in Sources */,
 				BE90D5501E34D3A00024CE8F /* Calendar.swift in Sources */,
 				BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */,
+				BE90D5651E3518EE0024CE8F /* Configuration.swift in Sources */,
 				BE90D5561E34DAC80024CE8F /* Ids.swift in Sources */,
 				BE90D54E1E3416A00024CE8F /* SeriesListTableViewController.swift in Sources */,
+				BE90D5591E34F50B0024CE8F /* CalendarCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
