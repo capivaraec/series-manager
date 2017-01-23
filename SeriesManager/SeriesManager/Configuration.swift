@@ -9,7 +9,7 @@
 import Foundation
 import Locksmith
 
-final class Configuration: NSObject {
+final class Configuration: Any {
 
     private static let userAccount = "SeriesManagerAccount"
 
@@ -24,5 +24,17 @@ final class Configuration: NSObject {
 
     static func revokeAuthorization() {
         try? Locksmith.deleteDataForUserAccount(userAccount: userAccount)
+    }
+}
+
+final class Util: Any {
+
+    static func formatDate(_ date: Date) -> String {
+
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.timeStyle = .short
+
+        return formatter.string(from: date)
     }
 }

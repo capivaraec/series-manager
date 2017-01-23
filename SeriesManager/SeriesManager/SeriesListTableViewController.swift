@@ -13,6 +13,7 @@ import ObjectMapper
 class SeriesListTableViewController: UITableViewController {
 
     var calendars = [Calendar]()
+    private let cellIdentifier = "calendarCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,14 @@ class SeriesListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "calendarCell", for: indexPath) as! CalendarTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? CalendarTableViewCell
+            ?? UINib(nibName: "CalendarTableViewCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! CalendarTableViewCell
+        let calendar = calendars[indexPath.row]
+
+        cell.lblTitle.text = calendar.show.title
+        cell.lblEpisode.text = String(format: "S%02dE%02d - %@", calendar.episode.season, calendar.episode.number, calendar.episode.title)
+        cell.lblDate.text = Util.formatDate(calendar.firstAired)
+        cell.lblWatched.text = "calcular porcentagem"
 
         return cell
     }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5133A966B572457FE4EC7FF2 /* Pods_SeriesManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0E650145ACF77717D52C09 /* Pods_SeriesManager.framework */; };
+		BE1D348A1E369AD4004AF1ED /* WatchedShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D34891E369AD4004AF1ED /* WatchedShow.swift */; };
 		BE8E98001E339EA80073BA5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E97FF1E339EA80073BA5C /* AppDelegate.swift */; };
 		BE8E98021E339EA80073BA5C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E98011E339EA80073BA5C /* LoginViewController.swift */; };
 		BE8E98051E339EA90073BA5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE8E98031E339EA90073BA5C /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		6F50EEB18E0E8FDC1AEFA4E4 /* Pods_SeriesManagerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeriesManagerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90E28602FBD99DBFE3F3B7A4 /* Pods-SeriesManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeriesManager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SeriesManager/Pods-SeriesManager.debug.xcconfig"; sourceTree = "<group>"; };
 		BD0E650145ACF77717D52C09 /* Pods_SeriesManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeriesManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE1D34891E369AD4004AF1ED /* WatchedShow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchedShow.swift; sourceTree = "<group>"; };
 		BE8E97FC1E339EA80073BA5C /* SeriesManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeriesManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8E97FF1E339EA80073BA5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE8E98011E339EA80073BA5C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				BE90D5511E34D96D0024CE8F /* Episode.swift */,
 				BE90D5531E34DA710024CE8F /* Show.swift */,
 				BE90D5551E34DAC80024CE8F /* Ids.swift */,
+				BE1D34891E369AD4004AF1ED /* WatchedShow.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				BE90D5541E34DA710024CE8F /* Show.swift in Sources */,
 				BE8E98021E339EA80073BA5C /* LoginViewController.swift in Sources */,
 				BE8E98001E339EA80073BA5C /* AppDelegate.swift in Sources */,
+				BE1D348A1E369AD4004AF1ED /* WatchedShow.swift in Sources */,
 				BE90D5631E3518A30024CE8F /* RestAPI.swift in Sources */,
 				BE90D5501E34D3A00024CE8F /* Calendar.swift in Sources */,
 				BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */,

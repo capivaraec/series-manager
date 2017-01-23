@@ -69,11 +69,13 @@ final class RestAPI {
         
         task.resume()
     }
+//Get Watched
+    // Get show watched progress (para pegar o progresso) -> https://api.trakt.tv/shows/hannibal/progress/watched
 
     static private func addRequestHeaders(_ request: URLRequest) -> URLRequest {
         var newRequest = request
         let accessToken = Configuration.getAccessToken()!
-
+// a1c90b5a53fa2659dfe91d62fd4be0cc1cc62169a9a1a1decbb209efd22a5e77
         newRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         newRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         newRequest.addValue("2", forHTTPHeaderField: "trakt-api-version")
@@ -82,9 +84,9 @@ final class RestAPI {
         return newRequest
     }
 
-    static func getCalendars(result: @escaping (_ calendars: [Calendar]?) -> Void) {
+    static func getWatchedShows(result: @escaping (_ shows: [WatchedShow]?) -> Void) {
 
-        let targetURLString = "https://api.trakt.tv/calendars/my/shows"
+        let targetURLString = "https://api.trakt.tv/sync/watched/shows"
         var request = URLRequest(url: URL(string: targetURLString)!)
 
         request.httpMethod = "GET"
@@ -98,12 +100,56 @@ final class RestAPI {
 
             if statusCode == 200 {
 
-                let mapper = Mapper<Calendar>()
-                result(mapper.mapArray(JSONString: String(data: data!, encoding: .utf8)!))
+                let mapper = Mapper<WatchedShow>()
+                guard let watchedShows = mapper.mapArray(JSONString: String(data: data!, encoding: .utf8)!) else {
+                    result(nil)
+                    return
+                }
+
+                let semaphore = DispatchSemaphore(value: 0)
+                _ = semaphore.wait(timeout: .distantFuture)
+                for watchedShow in watchedShows {
+                    getWatchedProgress(watchedShow: watchedShow, result: { (watchedShowWithProgress) in
+                        result(watchedShows)
+                    })
+                }
             }
         }
         
         task.resume()
     }
+
+    private static func getWatchedProgress(watchedShow: WatchedShow, result: @escaping (_ whatchedShow: WatchedShow) -> Void) {
+
+        let targetURLString = "https://api.trakt.tv/shows/\(watchedShow.show.ids.slug)/progress/watched"
+        var request = URLRequest(url: URL(string: targetURLString)!)
+
+        request.httpMethod = "GET"
+        request = addRequestHeaders(request)
+
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data, response, error) -> Void in
+
+            let statusCode = (response as! HTTPURLResponse).statusCode
+
+            if statusCode == 200 {
+
+                let mapper = Mapper<WatchedShow>()
+                guard let showProgress = mapper.map(JSONString: String(data: data!, encoding: .utf8)!) else {
+                    result(watchedShow)
+                    return
+                }
+
+                watchedShow.setProgress(completed: showProgress.completed, aired: showProgress.aired)
+                result(watchedShow)
+            }
+        }
+        
+        task.resume()
+
+    }
+
+    // Get a single show -> https://api.trakt.tv/shows/hannibal?extended=full mosstrar os detalhes de cada série (ou detalhes de cada episódio?)
 
 }
