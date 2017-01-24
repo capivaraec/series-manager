@@ -86,7 +86,7 @@ final class RestAPI {
 
     static func getWatchedShows(result: @escaping (_ shows: [WatchedShow]?) -> Void) {
 
-        let targetURLString = "https://api.trakt.tv/sync/watched/shows"
+        let targetURLString = "https://api.trakt.tv/sync/watched/shows?extended=noseasons"
         var request = URLRequest(url: URL(string: targetURLString)!)
 
         request.httpMethod = "GET"
@@ -106,13 +106,9 @@ final class RestAPI {
                     return
                 }
 
-                let semaphore = DispatchSemaphore(value: 0)
-                _ = semaphore.wait(timeout: .distantFuture)
-                for watchedShow in watchedShows {
-                    getWatchedProgress(watchedShow: watchedShow, result: { (watchedShowWithProgress) in
-                        result(watchedShows)
-                    })
-                }
+                result(watchedShows)
+            } else {
+                result(nil)
             }
         }
         

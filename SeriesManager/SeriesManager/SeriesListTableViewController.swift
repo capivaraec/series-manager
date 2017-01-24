@@ -12,8 +12,8 @@ import ObjectMapper
 
 class SeriesListTableViewController: UITableViewController {
 
-    var calendars = [Calendar]()
-    private let cellIdentifier = "calendarCell"
+    var watchedShows = [WatchedShow]()
+    private let cellIdentifier = "showCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,9 +22,9 @@ class SeriesListTableViewController: UITableViewController {
     }
 
     private func loadCalendars() {
-        RestAPI.getCalendars { (calendars) in
-            if calendars != nil {
-                self.calendars = calendars!
+        RestAPI.getWatchedShows { (shows) in
+            if shows != nil {
+                self.watchedShows = shows!
                 self.tableView.reloadData()
             }
         }
@@ -37,22 +37,15 @@ class SeriesListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return calendars.count
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return watchedShows.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? CalendarTableViewCell
-            ?? UINib(nibName: "CalendarTableViewCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! CalendarTableViewCell
-        let calendar = calendars[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
+            ?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+        let watchedShow = watchedShows[indexPath.row]
 
-        cell.lblTitle.text = calendar.show.title
-        cell.lblEpisode.text = String(format: "S%02dE%02d - %@", calendar.episode.season, calendar.episode.number, calendar.episode.title)
-        cell.lblDate.text = Util.formatDate(calendar.firstAired)
-        cell.lblWatched.text = "calcular porcentagem"
+        cell.textLabel?.text = watchedShow.show.title
 
         return cell
     }
