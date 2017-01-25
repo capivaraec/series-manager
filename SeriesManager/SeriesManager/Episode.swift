@@ -15,6 +15,8 @@ class Episode: Mappable {
     var number: Int!
     var title: String!
     var ids: Ids!
+    var overview: String!
+    var firstAired: Date!
 
     required convenience init?(map: Map) {
         self.init()
@@ -25,6 +27,13 @@ class Episode: Mappable {
         number <- map["number"]
         title <- map["title"]
         ids <- map["ids"]
+        overview <- map["overview"]
+        
+        var strDate = ""
+        strDate <- map["first_aired"]
+        if strDate != "" {
+            firstAired = Util.dateFromString(strDate)
+        }
     }
     
 }

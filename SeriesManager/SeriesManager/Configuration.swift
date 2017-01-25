@@ -29,12 +29,19 @@ final class Configuration: Any {
 
 final class Util: Any {
 
-    static func formatDate(_ date: Date) -> String {
+    static func stringFromDate(_ date: Date) -> String {
 
         let formatter = DateFormatter()
         formatter.dateStyle = .full
         formatter.timeStyle = .short
 
         return formatter.string(from: date)
+    }
+    
+    static func dateFromString(_ strDate: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
+        return dateFormatter.date(from: strDate)!
     }
 }

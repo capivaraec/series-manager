@@ -71,8 +71,6 @@ final class RestAPI {
         task.resume()
     }
 
-    // Get show watched progress (para pegar o progresso) -> https://api.trakt.tv/shows/hannibal/progress/watched
-
     static private func addRequestHeaders(_ request: URLRequest) -> URLRequest {
         var newRequest = request
         let accessToken = Configuration.getAccessToken()!
@@ -90,7 +88,12 @@ final class RestAPI {
             self.getWatchedShows(result: { watchedShows in
                 
                 let newArray = watchedShows!.map { watched -> WatchedShow in
-                    getWatchedProgress(watchedShow: watched)
+                    let show = getWatchedProgress(watchedShow: watched)
+                    if show.nextEpisode != nil {
+                        show.nextEpisode = getEpisode(showId: show.show.ids.slug, season: show.nextEpisode.season, number: show.nextEpisode.number)
+                    }
+                    
+                    return show
                 }
                 
                 observer.onNext(newArray)
@@ -161,7 +164,31 @@ final class RestAPI {
 
     }
 
-    // Get a single show -> https://api.trakt.tv/shows/hannibal?extended=full mostrar os detalhes de cada série (ou detalhes de cada episódio?)
+    private static func getEpisode(showId: String, season: Int, number: Int) -> Episode {
+        
+        let targetURLString = "https://api.trakt.tv/shows/\(showId)/seasons/\(season)/episodes/\(number)?extended=full"
+        var request = URLRequest(url: URL(string: targetURLString)!)
+        
+        request.httpMethod = "GET"
+        request = addRequestHeaders(request)
+        
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let result = session.synchronousDataTask(with: request)
+        
+        let statusCode = (result.urlResponse as! HTTPURLResponse).statusCode
+        
+        if statusCode == 200 {
+            
+            let mapper = Mapper<Episode>()
+            guard let episode = mapper.map(JSONString: String(data: result.data!, encoding: .utf8)!) else {
+                return Episode()
+            }
+            return episode
+        }
+        
+        return Episode()
+    }
 
 }
 
