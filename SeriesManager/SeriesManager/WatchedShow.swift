@@ -13,7 +13,7 @@ class WatchedShow: Mappable {
 
     var aired: Int!
     var completed: Int!
-    var watchedPercentage: Int!
+    var progress: Int!
     var show: Show!
 
     required convenience init?(map: Map) {
@@ -29,7 +29,7 @@ class WatchedShow: Mappable {
     func setProgress(completed: Int, aired: Int) {
         self.completed = completed
         self.aired = aired
-        self.watchedPercentage = completed * 100 / aired
+        self.progress = completed * 100 / aired
     }
     
 }

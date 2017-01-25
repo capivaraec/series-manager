@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import Locksmith
-import ObjectMapper
+import RxSwift
 
 class SeriesListTableViewController: UITableViewController {
 
     var watchedShows = [WatchedShow]()
     private let cellIdentifier = "showCell"
+    private let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +22,15 @@ class SeriesListTableViewController: UITableViewController {
     }
 
     private func loadCalendars() {
-        RestAPI.getWatchedShows { (shows) in
-            if shows != nil {
-                self.watchedShows = shows!
+        RestAPI.getWatchedShows2().observeOn(MainScheduler.instance)
+        .subscribe(
+            onNext: {
+                self.watchedShows = $0
                 self.tableView.reloadData()
-            }
-        }
+        },
+            onError: { err in
+                //TODO: fodeu
+        }).addDisposableTo(bag)
     }
 
     // MARK: - Table view data source
@@ -46,6 +49,7 @@ class SeriesListTableViewController: UITableViewController {
         let watchedShow = watchedShows[indexPath.row]
 
         cell.textLabel?.text = watchedShow.show.title
+        print("\(watchedShow.progress)")
 
         return cell
     }

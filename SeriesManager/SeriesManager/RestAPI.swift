@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+import RxSwift
 
 final class RestAPI {
 
@@ -69,7 +70,7 @@ final class RestAPI {
         
         task.resume()
     }
-//Get Watched
+
     // Get show watched progress (para pegar o progresso) -> https://api.trakt.tv/shows/hannibal/progress/watched
 
     static private func addRequestHeaders(_ request: URLRequest) -> URLRequest {
@@ -82,6 +83,22 @@ final class RestAPI {
         newRequest.addValue("f36eefe52b427fd2ed0fb2605fa3f938e2685c49785ddb00c4a2701c375bc2bc", forHTTPHeaderField: "trakt-api-key")
 
         return newRequest
+    }
+    
+    static func getWatchedShows2() -> Observable<[WatchedShow]> {
+        return Observable<[WatchedShow]>.create { observer in
+            self.getWatchedShows(result: { watchedShows in
+                
+                let newArray = watchedShows!.map { watched -> WatchedShow in
+                    getWatchedProgress(watchedShow: watched)
+                }
+                
+                observer.onNext(newArray)
+                observer.onCompleted()
+            })
+            
+            return Disposables.create()
+            }
     }
 
     static func getWatchedShows(result: @escaping (_ shows: [WatchedShow]?) -> Void) {
@@ -115,7 +132,7 @@ final class RestAPI {
         task.resume()
     }
 
-    private static func getWatchedProgress(watchedShow: WatchedShow, result: @escaping (_ whatchedShow: WatchedShow) -> Void) {
+    private static func getWatchedProgress(watchedShow: WatchedShow) -> WatchedShow {
 
         let targetURLString = "https://api.trakt.tv/shows/\(watchedShow.show.ids.slug)/progress/watched"
         var request = URLRequest(url: URL(string: targetURLString)!)
@@ -125,27 +142,47 @@ final class RestAPI {
 
         let session = URLSession(configuration: URLSessionConfiguration.default)
 
-        let task: URLSessionDataTask = session.dataTask(with: request) { (data, response, error) -> Void in
-
-            let statusCode = (response as! HTTPURLResponse).statusCode
-
-            if statusCode == 200 {
-
-                let mapper = Mapper<WatchedShow>()
-                guard let showProgress = mapper.map(JSONString: String(data: data!, encoding: .utf8)!) else {
-                    result(watchedShow)
-                    return
-                }
-
-                watchedShow.setProgress(completed: showProgress.completed, aired: showProgress.aired)
-                result(watchedShow)
+        let result = session.synchronousDataTask(with: request)
+        
+        let statusCode = (result.urlResponse as! HTTPURLResponse).statusCode
+        
+        if statusCode == 200 {
+            
+            let mapper = Mapper<WatchedShow>()
+            guard let showProgress = mapper.map(JSONString: String(data: result.data!, encoding: .utf8)!) else {
+                return watchedShow
             }
+            
+            watchedShow.setProgress(completed: showProgress.completed, aired: showProgress.aired)
         }
         
-        task.resume()
+        return (watchedShow)
 
     }
 
-    // Get a single show -> https://api.trakt.tv/shows/hannibal?extended=full mosstrar os detalhes de cada série (ou detalhes de cada episódio?)
+    // Get a single show -> https://api.trakt.tv/shows/hannibal?extended=full mostrar os detalhes de cada série (ou detalhes de cada episódio?)
 
+}
+
+extension URLSession {
+    func synchronousDataTask(with urlRequest: URLRequest) -> (data: Data?, urlResponse: URLResponse?, error: Error?) {
+        var data: Data?
+        var response: URLResponse?
+        var error: Error?
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        let dataTask = self.dataTask(with: urlRequest) {
+            data = $0
+            response = $1
+            error = $2
+            
+            semaphore.signal()
+        }
+        dataTask.resume()
+        
+        _ = semaphore.wait(timeout: .distantFuture)
+        
+        return (data, response, error)
+    }
 }
