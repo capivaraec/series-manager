@@ -49,7 +49,9 @@ class SeriesListTableViewController: UITableViewController {
         let watchedShow = watchedShows[indexPath.row]
 
         cell.textLabel?.text = watchedShow.show.title
-        print("\(watchedShow.progress)")
+        if watchedShow.nextEpisode != nil {
+            print(String(format: "S%02dE%02d - %@", watchedShow.nextEpisode.season, watchedShow.nextEpisode.number, watchedShow.nextEpisode.title))
+        }
 
         return cell
     }

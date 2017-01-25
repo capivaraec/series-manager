@@ -154,9 +154,10 @@ final class RestAPI {
             }
             
             watchedShow.setProgress(completed: showProgress.completed, aired: showProgress.aired)
+            watchedShow.nextEpisode = showProgress.nextEpisode
         }
         
-        return (watchedShow)
+        return watchedShow
 
     }
 

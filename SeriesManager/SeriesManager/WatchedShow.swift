@@ -15,6 +15,7 @@ class WatchedShow: Mappable {
     var completed: Int!
     var progress: Int!
     var show: Show!
+    var nextEpisode: Episode!
 
     required convenience init?(map: Map) {
         self.init()
@@ -24,6 +25,7 @@ class WatchedShow: Mappable {
         self.completed <- map["completed"]
         self.aired <- map["aired"]
         self.show <- map["show"]
+        self.nextEpisode <- map["next_episode"]
     }
 
     func setProgress(completed: Int, aired: Int) {
