@@ -154,6 +154,7 @@
                                                 <constraint firstItem="y0H-ac-WmQ" firstAttribute="top" secondItem="FG9-AY-eQ0" secondAttribute="bottom" id="r1l-fe-iqV"/>
                                                 <constraint firstItem="Zcl-VY-cOZ" firstAttribute="top" secondItem="y0H-ac-WmQ" secondAttribute="bottom" id="tbw-EC-tCw"/>
                                                 <constraint firstItem="Zcl-VY-cOZ" firstAttribute="leading" secondItem="Cf8-eY-0s8" secondAttribute="leading" constant="8" id="yqM-om-jGA"/>
+                                                <constraint firstAttribute="bottom" secondItem="Zcl-VY-cOZ" secondAttribute="bottom" constant="8" id="zPz-EG-zdB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -233,6 +234,8 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="btnNext" destination="9yJ-Mm-hNw" id="WxQ-Ao-YXv"/>
+                        <outlet property="btnPrevious" destination="aKM-23-kDR" id="gBi-wG-hdv"/>
                         <outlet property="btnWatched" destination="tMq-98-D6V" id="lez-ap-Mwq"/>
                         <outlet property="lblDate" destination="Zcl-VY-cOZ" id="PCY-wa-A9Y"/>
                         <outlet property="lblEpisodeNumber" destination="y0H-ac-WmQ" id="srm-g6-Esg"/>
