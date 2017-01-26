@@ -24,6 +24,8 @@
 		BE90D55A1E34F50B0024CE8F /* CalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE90D5581E34F50B0024CE8F /* CalendarTableViewCell.xib */; };
 		BE90D5631E3518A30024CE8F /* RestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5621E3518A30024CE8F /* RestAPI.swift */; };
 		BE90D5651E3518EE0024CE8F /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5641E3518EE0024CE8F /* Configuration.swift */; };
+		F0DC25101E39C6F9006D6248 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DC250F1E39C6F9006D6248 /* ProfileTableViewController.swift */; };
+		F0DC25121E39C9DB006D6248 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DC25111E39C9DB006D6248 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		BE90D5581E34F50B0024CE8F /* CalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarTableViewCell.xib; sourceTree = "<group>"; };
 		BE90D5621E3518A30024CE8F /* RestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestAPI.swift; sourceTree = "<group>"; };
 		BE90D5641E3518EE0024CE8F /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		F0DC250F1E39C6F9006D6248 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		F0DC25111E39C9DB006D6248 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 			children = (
 				BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */,
 				BE8E98011E339EA80073BA5C /* LoginViewController.swift */,
+				F0DC250F1E39C6F9006D6248 /* ProfileTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 				BE90D5531E34DA710024CE8F /* Show.swift */,
 				BE90D5551E34DAC80024CE8F /* Ids.swift */,
 				BE1D34891E369AD4004AF1ED /* WatchedShow.swift */,
+				F0DC25111E39C9DB006D6248 /* User.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -364,12 +370,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0DC25121E39C9DB006D6248 /* User.swift in Sources */,
 				BE90D5541E34DA710024CE8F /* Show.swift in Sources */,
 				BE8E98021E339EA80073BA5C /* LoginViewController.swift in Sources */,
 				BE8E98001E339EA80073BA5C /* AppDelegate.swift in Sources */,
 				BE1D348A1E369AD4004AF1ED /* WatchedShow.swift in Sources */,
 				BE90D5631E3518A30024CE8F /* RestAPI.swift in Sources */,
 				BE90D5501E34D3A00024CE8F /* Calendar.swift in Sources */,
+				F0DC25101E39C6F9006D6248 /* ProfileTableViewController.swift in Sources */,
 				BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */,
 				BE90D5651E3518EE0024CE8F /* Configuration.swift in Sources */,
 				BE90D5561E34DAC80024CE8F /* Ids.swift in Sources */,

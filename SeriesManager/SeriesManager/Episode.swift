@@ -30,5 +30,4 @@ class Episode: Mappable {
         overview <- map["overview"]
         firstAired <- map["first_aired"]
     }
-    
 }

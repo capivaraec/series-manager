@@ -12,7 +12,7 @@ import RxSwift
 class SeriesListTableViewController: UITableViewController {
 
     var watchedShows = [WatchedShow]()
-    var filteredShows: [WatchedShow]!
+    var filteredShows = [WatchedShow]()
     var filtered = true
     private let cellIdentifier = "calendarCell"
     private let bag = DisposeBag()

@@ -35,15 +35,15 @@ final class Configuration: Any {
 
 final class Util: Any {
     
-    static func formatDate(_ strDate: String) -> String {
-        return stringFromDate(dateFromString(strDate))
+    static func formatDate(_ strDate: String, dateStyle: DateFormatter.Style = .long, timeStyle: DateFormatter.Style = .medium) -> String {
+        return stringFromDate(dateFromString(strDate), dateStyle: dateStyle, timeStyle: timeStyle)
     }
 
-    static func stringFromDate(_ date: Date) -> String {
+    static func stringFromDate(_ date: Date, dateStyle: DateFormatter.Style = .long, timeStyle: DateFormatter.Style = .medium) -> String {
 
         let formatter = DateFormatter()
-        formatter.dateStyle = .full
-        formatter.timeStyle = .short
+        formatter.dateStyle = dateStyle
+        formatter.timeStyle = timeStyle
 
         return formatter.string(from: date)
     }

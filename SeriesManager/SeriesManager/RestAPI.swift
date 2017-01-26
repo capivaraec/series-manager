@@ -84,6 +84,81 @@ final class RestAPI {
         return newRequest
     }
     
+    static func getUserInformation() -> Observable<User?> {
+        return Observable<User?>.create { observer in
+            self.getUserSettings(result: { settings in
+                
+                if settings != nil {
+                    if let userStats = getUserStats(userId: settings!.slugId) {
+                        settings!.setUserStats(watchedShows: userStats.watchedShows, watchedEpisodes: userStats.watchedEpisodes, duration: userStats.duration)
+                    }
+                }
+                
+                observer.onNext(settings)
+                observer.onCompleted()
+            })
+            
+            return Disposables.create()
+        }
+    }
+    
+    private static func getUserSettings(result: @escaping (_ user: User?) -> Void) {
+        
+        let targetURLString = "https://api.trakt.tv/users/settings"
+        var request = URLRequest(url: URL(string: targetURLString)!)
+        
+        request.httpMethod = "GET"
+        request = addRequestHeaders(request)
+        
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data, response, error) -> Void in
+            
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            
+            if statusCode == 200 {
+                
+                let mapper = Mapper<User>()
+                guard let userSettings = mapper.map(JSONString: String(data: data!, encoding: .utf8)!) else {
+                    result(nil)
+                    return
+                }
+                
+                result(userSettings)
+            } else {
+                result(nil)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    private static func getUserStats(userId: String) -> User? {
+        
+        let targetURLString = "https://api.trakt.tv/users/\(userId)/stats"
+        var request = URLRequest(url: URL(string: targetURLString)!)
+        
+        request.httpMethod = "GET"
+        request = addRequestHeaders(request)
+        
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let result = session.synchronousDataTask(with: request)
+        
+        let statusCode = (result.urlResponse as! HTTPURLResponse).statusCode
+        
+        if statusCode == 200 {
+            
+            let mapper = Mapper<User>()
+            guard let user = mapper.map(JSONString: String(data: result.data!, encoding: .utf8)!) else {
+                return nil
+            }
+            return user
+        }
+        
+        return nil
+    }
+    
     static func getAllShows(useCache: Bool) -> Observable<[WatchedShow]> {
         
         let cacheKey = "allShows"
@@ -127,7 +202,7 @@ final class RestAPI {
         }
     }
 
-    static func getWatchedShows(result: @escaping (_ shows: [WatchedShow]?) -> Void) {
+    private static func getWatchedShows(result: @escaping (_ shows: [WatchedShow]?) -> Void) {
 
         let targetURLString = "https://api.trakt.tv/sync/watched/shows?extended=noseasons"
         var request = URLRequest(url: URL(string: targetURLString)!)
@@ -184,7 +259,6 @@ final class RestAPI {
         }
         
         return watchedShow
-
     }
 
     private static func getEpisode(showId: String, season: Int, number: Int) -> Episode {
@@ -212,7 +286,6 @@ final class RestAPI {
         
         return Episode()
     }
-
 }
 
 extension URLSession {
