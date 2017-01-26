@@ -16,7 +16,6 @@
 		BE8E980A1E339EA90073BA5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE8E98081E339EA90073BA5C /* LaunchScreen.storyboard */; };
 		BE8E98151E339EAA0073BA5C /* SeriesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E98141E339EAA0073BA5C /* SeriesManagerTests.swift */; };
 		BE90D54E1E3416A00024CE8F /* SeriesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */; };
-		BE90D5501E34D3A00024CE8F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D54F1E34D3A00024CE8F /* Calendar.swift */; };
 		BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5511E34D96D0024CE8F /* Episode.swift */; };
 		BE90D5541E34DA710024CE8F /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5531E34DA710024CE8F /* Show.swift */; };
 		BE90D5561E34DAC80024CE8F /* Ids.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE90D5551E34DAC80024CE8F /* Ids.swift */; };
@@ -56,7 +55,6 @@
 		BE8E98141E339EAA0073BA5C /* SeriesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesManagerTests.swift; sourceTree = "<group>"; };
 		BE8E98161E339EAA0073BA5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewController.swift; sourceTree = "<group>"; };
-		BE90D54F1E34D3A00024CE8F /* Calendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		BE90D5511E34D96D0024CE8F /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		BE90D5531E34DA710024CE8F /* Show.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		BE90D5551E34DAC80024CE8F /* Ids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ids.swift; sourceTree = "<group>"; };
@@ -190,7 +188,6 @@
 		BE90D5601E3518660024CE8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BE90D54F1E34D3A00024CE8F /* Calendar.swift */,
 				BE90D5511E34D96D0024CE8F /* Episode.swift */,
 				BE90D5531E34DA710024CE8F /* Show.swift */,
 				BE90D5551E34DAC80024CE8F /* Ids.swift */,
@@ -380,7 +377,6 @@
 				F08310D31E3A4F8A00A5E5A5 /* EpisodeTableViewController.swift in Sources */,
 				BE1D348A1E369AD4004AF1ED /* WatchedShow.swift in Sources */,
 				BE90D5631E3518A30024CE8F /* RestAPI.swift in Sources */,
-				BE90D5501E34D3A00024CE8F /* Calendar.swift in Sources */,
 				F0DC25101E39C6F9006D6248 /* ProfileTableViewController.swift in Sources */,
 				BE90D5521E34D96D0024CE8F /* Episode.swift in Sources */,
 				BE90D5651E3518EE0024CE8F /* Configuration.swift in Sources */,
