@@ -9,19 +9,33 @@
 import UIKit
 import RxSwift
 
-class SeriesListTableViewController: UITableViewController {
+class SeriesListTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
 
     var watchedShows = [WatchedShow]()
     var filteredShows = [WatchedShow]()
     var filtered = true
     private let cellIdentifier = "calendarCell"
     private let bag = DisposeBag()
+    private var searchController: UISearchController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         refreshControl?.addTarget(self, action: #selector(loadWatchedShows), for: .valueChanged)
         loadWatchedShows(useCache: true)
+        
+        setupSearch()
+    }
+    
+    private func setupSearch() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.definesPresentationContext = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        
+        tableView.tableHeaderView = searchController.searchBar
+        tableView.contentOffset = CGPoint(x: 0, y: tableView.tableHeaderView?.frame.height ?? 0)
     }
 
     @objc
@@ -81,7 +95,11 @@ class SeriesListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        let watchedShow = filtered ? filteredShows[indexPath.row] : watchedShows[indexPath.row]
+        performSegue(withIdentifier: "showSegue", sender: watchedShow)
+    }
+    
+    public func updateSearchResults(for searchController: UISearchController) {
     }
 
 
@@ -102,8 +120,5 @@ class SeriesListTableViewController: UITableViewController {
         }
         
         tableView.reloadData()
-    }
-    
-    @IBAction func addTouched(_ sender: Any) {
     }
 }

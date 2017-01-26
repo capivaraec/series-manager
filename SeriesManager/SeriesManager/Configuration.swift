@@ -34,14 +34,6 @@ final class Configuration: Any {
     
     static func deleteCache() {
         getRequestsCache()?.removeAllObjects()
-        
-        URLCache.shared.removeAllCachedResponses()
-        
-        if let cookies = HTTPCookieStorage.shared.cookies {
-            for cookie in cookies {
-                HTTPCookieStorage.shared.deleteCookie(cookie)
-            }
-        }
     }
 }
 
@@ -66,7 +58,11 @@ final class Util: Any {
         
         return dateFormatter.date(from: strDate)!
     }
-}
+    
+    static func minutesToDaysHoursMinutes(_ minutes: Int) -> (days: Int, hours: Int, minutes: Int) {
+        return (minutes / 1440, (minutes % 1440) / 24, (minutes % 1440) % 24)
+    }
+}//84, 2, 31
 
 final class Constants: Any {
     
