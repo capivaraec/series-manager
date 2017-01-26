@@ -12,6 +12,8 @@ import RxSwift
 class SeriesListTableViewController: UITableViewController {
 
     var watchedShows = [WatchedShow]()
+    var filteredShows: [WatchedShow]!
+    var filtered = true
     private let cellIdentifier = "calendarCell"
     private let bag = DisposeBag()
 
@@ -28,6 +30,11 @@ class SeriesListTableViewController: UITableViewController {
         .subscribe(
             onNext: {
                 self.watchedShows = $0
+                
+                if self.filtered {
+                    self.filterShows()
+                }
+                
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
         },
@@ -43,17 +50,18 @@ class SeriesListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return watchedShows.count
+        return filtered ? filteredShows.count : watchedShows.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return watchedShows[indexPath.row].nextEpisode == nil ? 44 : 80
+        let show = filtered ? filteredShows[indexPath.row] : watchedShows[indexPath.row]
+        return show.nextEpisode == nil ? 44 : 80
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? CalendarTableViewCell
             ?? UINib(nibName: "CalendarTableViewCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! CalendarTableViewCell
-        let watchedShow = watchedShows[indexPath.row]
+        let watchedShow = filtered ? filteredShows[indexPath.row] : watchedShows[indexPath.row]
 
         cell.lblTitle.text = watchedShow.show.title
         
@@ -82,5 +90,20 @@ class SeriesListTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
     }
+    
+    private func filterShows() {
+        filteredShows = watchedShows.filter { return $0.nextEpisode != nil }
+    }
 
+    @IBAction func filterTouched(_ sender: Any) {
+        filtered = !filtered
+        if filtered {
+            filterShows()
+        }
+        
+        tableView.reloadData()
+    }
+    
+    @IBAction func addTouched(_ sender: Any) {
+    }
 }
