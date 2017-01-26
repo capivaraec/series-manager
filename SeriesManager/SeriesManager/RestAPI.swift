@@ -194,7 +194,34 @@ final class RestAPI {
     
     static func getAllShows(useCache: Bool) -> Observable<[WatchedShow]> {
         
+        
         let cacheKey = "allShows"
+        let remoteValues = Observable<[WatchedShow]>.create { observer in
+            self.getWatchedShows(result: { watchedShows in
+                
+                let newArray = watchedShows!.map { watched -> WatchedShow in
+                    let show = getWatchedProgress(watchedShow: watched)
+                    if show.nextEpisode != nil {
+                        show.nextEpisode = getEpisode(showId: show.show.ids.slug, season: show.nextEpisode.season, number: show.nextEpisode.number)
+                    }
+                    
+                    return show
+                }
+                
+                if let cache = Configuration.getRequestsCache() {
+                    
+                    let mapper = Mapper<WatchedShow>()
+                    let strJSON = mapper.toJSONString(newArray)! as NSString
+                    cache.setObject(strJSON as NSString, forKey: cacheKey, expires: .seconds(Constants.requestsCacheTTL))
+                    
+                }
+                
+                observer.onNext(newArray)
+                observer.onCompleted()
+            })
+            
+            return Disposables.create()
+        }
         
         if useCache,
             let cache = Configuration.getRequestsCache(),
@@ -203,35 +230,10 @@ final class RestAPI {
             let mapper = Mapper<WatchedShow>()
             let shows = mapper.mapArray(JSONString: data as String)!
             
-            return Observable.just(shows)
+            return Observable.just(shows).concat(remoteValues)
             
         } else {
-            return Observable<[WatchedShow]>.create { observer in
-                self.getWatchedShows(result: { watchedShows in
-                    
-                    let newArray = watchedShows!.map { watched -> WatchedShow in
-                        let show = getWatchedProgress(watchedShow: watched)
-                        if show.nextEpisode != nil {
-                            show.nextEpisode = getEpisode(showId: show.show.ids.slug, season: show.nextEpisode.season, number: show.nextEpisode.number)
-                        }
-                        
-                        return show
-                    }
-                    
-                    if let cache = Configuration.getRequestsCache() {
-                        
-                        let mapper = Mapper<WatchedShow>()
-                        let strJSON = mapper.toJSONString(newArray)! as NSString
-                        cache.setObject(strJSON as NSString, forKey: cacheKey, expires: .seconds(Constants.requestsCacheTTL))
-                        
-                    }
-                    
-                    observer.onNext(newArray)
-                    observer.onCompleted()
-                })
-                
-                return Disposables.create()
-            }
+            return remoteValues
         }
     }
 

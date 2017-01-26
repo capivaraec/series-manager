@@ -66,5 +66,5 @@ final class Util: Any {
 
 final class Constants: Any {
     
-    static let requestsCacheTTL: TimeInterval = 60 * 5 // 5 minutes
+    static let requestsCacheTTL: TimeInterval = 60 * 60 * 24 * 15
 }
