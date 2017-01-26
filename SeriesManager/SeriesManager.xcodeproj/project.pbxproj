@@ -98,11 +98,11 @@
 		BE8E97F31E339EA00073BA5C = {
 			isa = PBXGroup;
 			children = (
+				A1F59E08F5356E4A47F3EB05 /* Frameworks */,
+				D5CCFAD8AEE7915C9D9F2C6B /* Pods */,
+				BE8E97FD1E339EA80073BA5C /* Products */,
 				BE8E97FE1E339EA80073BA5C /* SeriesManager */,
 				BE8E98131E339EAA0073BA5C /* SeriesManagerTests */,
-				BE8E97FD1E339EA80073BA5C /* Products */,
-				D5CCFAD8AEE7915C9D9F2C6B /* Pods */,
-				A1F59E08F5356E4A47F3EB05 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,13 +118,13 @@
 		BE8E97FE1E339EA80073BA5C /* SeriesManager */ = {
 			isa = PBXGroup;
 			children = (
-				BE90D5611E35187F0024CE8F /* RestAPI */,
-				BE90D5601E3518660024CE8F /* Models */,
-				BE90D55F1E3518420024CE8F /* Views */,
-				BE90D55E1E3518290024CE8F /* Controllers */,
-				BE90D55D1E35181D0024CE8F /* BusinessLayer */,
-				BE90D55C1E3518050024CE8F /* Resources */,
 				BE90D55B1E3517EE0024CE8F /* Application */,
+				BE90D55D1E35181D0024CE8F /* BusinessLayer */,
+				BE90D55E1E3518290024CE8F /* Controllers */,
+				BE90D5601E3518660024CE8F /* Models */,
+				BE90D55C1E3518050024CE8F /* Resources */,
+				BE90D5611E35187F0024CE8F /* RestAPI */,
+				BE90D55F1E3518420024CE8F /* Views */,
 				BE8E98081E339EA90073BA5C /* LaunchScreen.storyboard */,
 			);
 			path = SeriesManager;
@@ -133,8 +133,8 @@
 		BE8E98131E339EAA0073BA5C /* SeriesManagerTests */ = {
 			isa = PBXGroup;
 			children = (
-				BE8E98141E339EAA0073BA5C /* SeriesManagerTests.swift */,
 				BE8E98161E339EAA0073BA5C /* Info.plist */,
+				BE8E98141E339EAA0073BA5C /* SeriesManagerTests.swift */,
 			);
 			path = SeriesManagerTests;
 			sourceTree = "<group>";
@@ -144,16 +144,16 @@
 			children = (
 				BE8E97FF1E339EA80073BA5C /* AppDelegate.swift */,
 			);
-			name = Application;
+			path = Application;
 			sourceTree = "<group>";
 		};
 		BE90D55C1E3518050024CE8F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BE8E980B1E339EA90073BA5C /* Info.plist */,
 				BE8E98061E339EA90073BA5C /* Assets.xcassets */,
+				BE8E980B1E339EA90073BA5C /* Info.plist */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		BE90D55D1E35181D0024CE8F /* BusinessLayer */ = {
@@ -161,18 +161,18 @@
 			children = (
 				BE90D5641E3518EE0024CE8F /* Configuration.swift */,
 			);
-			name = BusinessLayer;
+			path = BusinessLayer;
 			sourceTree = "<group>";
 		};
 		BE90D55E1E3518290024CE8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */,
+				F08310D21E3A4F8A00A5E5A5 /* EpisodeTableViewController.swift */,
 				BE8E98011E339EA80073BA5C /* LoginViewController.swift */,
 				F0DC250F1E39C6F9006D6248 /* ProfileTableViewController.swift */,
-				F08310D21E3A4F8A00A5E5A5 /* EpisodeTableViewController.swift */,
+				BE90D54D1E3416A00024CE8F /* SeriesListTableViewController.swift */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		BE90D55F1E3518420024CE8F /* Views */ = {
@@ -182,19 +182,19 @@
 				BE90D5581E34F50B0024CE8F /* CalendarTableViewCell.xib */,
 				BE8E98031E339EA90073BA5C /* Main.storyboard */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		BE90D5601E3518660024CE8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				BE90D5511E34D96D0024CE8F /* Episode.swift */,
-				BE90D5531E34DA710024CE8F /* Show.swift */,
 				BE90D5551E34DAC80024CE8F /* Ids.swift */,
-				BE1D34891E369AD4004AF1ED /* WatchedShow.swift */,
+				BE90D5531E34DA710024CE8F /* Show.swift */,
 				F0DC25111E39C9DB006D6248 /* User.swift */,
+				BE1D34891E369AD4004AF1ED /* WatchedShow.swift */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		BE90D5611E35187F0024CE8F /* RestAPI */ = {
@@ -202,7 +202,7 @@
 			children = (
 				BE90D5621E3518A30024CE8F /* RestAPI.swift */,
 			);
-			name = RestAPI;
+			path = RestAPI;
 			sourceTree = "<group>";
 		};
 		D5CCFAD8AEE7915C9D9F2C6B /* Pods */ = {
@@ -411,6 +411,7 @@
 				BE8E98041E339EA90073BA5C /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		BE8E98081E339EA90073BA5C /* LaunchScreen.storyboard */ = {
@@ -419,6 +420,7 @@
 				BE8E98091E339EA90073BA5C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -524,7 +526,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = SeriesManager/Info.plist;
+				INFOPLIST_FILE = SeriesManager/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.capivaraec.SeriesManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -541,7 +543,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = SeriesManager/Info.plist;
+				INFOPLIST_FILE = SeriesManager/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.capivaraec.SeriesManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
