@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import SDWebImage
+import AppController
 
 class ProfileTableViewController: UITableViewController {
 
@@ -43,10 +44,19 @@ class ProfileTableViewController: UITableViewController {
                     //TODO: fodeu
             }).addDisposableTo(bag)
     }
+    
+    private func logout() {
+//        self.tabBarController?.showInfiniteProgress(fullScreen: true)
+        RestAPI.revokeToken { (success) in
+            if success {
+                AppController.didLogout()
+            }
+        }
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
-            
+            logout()
         }
     }
 }

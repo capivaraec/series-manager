@@ -31,6 +31,18 @@ final class Configuration: Any {
     static func getRequestsCache() -> Cache<NSString>? {
         return try? Cache<NSString>(name: cacheKey)
     }
+    
+    static func deleteCache() {
+        getRequestsCache()?.removeAllObjects()
+        
+        URLCache.shared.removeAllCachedResponses()
+        
+        if let cookies = HTTPCookieStorage.shared.cookies {
+            for cookie in cookies {
+                HTTPCookieStorage.shared.deleteCookie(cookie)
+            }
+        }
+    }
 }
 
 final class Util: Any {

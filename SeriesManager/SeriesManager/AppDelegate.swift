@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         controller.didLogoutBlock = {
             Configuration.revokeAuthorization()
+            Configuration.deleteCache()
         }
 
         controller.didLoginBlock = {
@@ -35,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         appController.application(application, didFinishLaunchingWithOptions: launchOptions)
 
         window = UIWindow(frame: UIScreen.main.bounds)

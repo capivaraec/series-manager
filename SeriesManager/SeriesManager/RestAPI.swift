@@ -84,6 +84,39 @@ final class RestAPI {
         return newRequest
     }
     
+    static func revokeToken(completion: @escaping (_ success: Bool) -> Void) {
+        
+        guard let accessToken = Configuration.getAccessToken() else {
+            DispatchQueue.main.async {
+                completion(true)
+            }
+            return
+        }
+        
+        var request = URLRequest(url: URL(string: "https://api.trakt.tv/oauth/revoke")!)
+        
+        let postParams = ["token" : accessToken]
+        
+        let json = try! JSONSerialization.data(withJSONObject: postParams)
+        
+        request.httpBody = json
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        request.httpMethod = "POST"
+        request = addRequestHeaders(request)
+        
+        let task: URLSessionDataTask = URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
+            
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            
+            DispatchQueue.main.async {
+                completion(statusCode == 200)
+            }
+        }
+        
+        task.resume()
+    }
+    
     static func getUserInformation() -> Observable<User?> {
         return Observable<User?>.create { observer in
             self.getUserSettings(result: { settings in
