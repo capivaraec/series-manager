@@ -60,9 +60,9 @@ final class Util: Any {
     }
     
     static func minutesToDaysHoursMinutes(_ minutes: Int) -> (days: Int, hours: Int, minutes: Int) {
-        return (minutes / 1440, (minutes % 1440) / 24, (minutes % 1440) % 24)
+        return (minutes / 1440, (minutes % 1440) / 60, (minutes % 1440) % 60)
     }
-}//84, 2, 31
+}
 
 final class Constants: Any {
     

@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class SeriesListTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
+class SeriesListTableViewController: UITableViewController {
 
     @IBOutlet weak var btnFilter: UIBarButtonItem!
     
@@ -18,28 +18,14 @@ class SeriesListTableViewController: UITableViewController, UISearchResultsUpdat
     var filtered = true
     private let cellIdentifier = "calendarCell"
     private let bag = DisposeBag()
-    private var searchController: UISearchController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         refreshControl?.addTarget(self, action: #selector(loadWatchedShows), for: .valueChanged)
         loadWatchedShows(useCache: true)
-        
-        setupSearch()
     }
     
-    private func setupSearch() {
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.definesPresentationContext = false
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        
-        tableView.tableHeaderView = searchController.searchBar
-        tableView.contentOffset = CGPoint(x: 0, y: tableView.tableHeaderView?.frame.height ?? 0)
-    }
-
     @objc
     private func loadWatchedShows(useCache: Bool = false) {
         RestAPI.getAllShows(useCache: useCache).observeOn(MainScheduler.instance)
@@ -100,10 +86,6 @@ class SeriesListTableViewController: UITableViewController, UISearchResultsUpdat
         let watchedShow = filtered ? filteredShows[indexPath.row] : watchedShows[indexPath.row]
         performSegue(withIdentifier: "showSegue", sender: watchedShow)
     }
-    
-    public func updateSearchResults(for searchController: UISearchController) {
-    }
-
 
     // MARK: - Navigation
 

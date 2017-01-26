@@ -21,8 +21,6 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
         webView.loadRequest(RestAPI.getAuthorizationRequest())
     }
 
-    // MARK: UIWebViewDelegate Functions
-
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         let url = request.url!
         print(url)
@@ -36,8 +34,6 @@ class LoginViewController: UIViewController, UIWebViewDelegate {
                 RestAPI.requestForAccessToken(authorizationCode: code, completion: { (success, error) in
                     if success {
                         AppController.didLogin()
-                    } else {
-                        //TODO: tratar erro
                     }
                 })
             }

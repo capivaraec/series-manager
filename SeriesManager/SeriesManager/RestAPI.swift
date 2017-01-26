@@ -118,12 +118,22 @@ final class RestAPI {
     }
     
     static func getUserInformation() -> Observable<User?> {
-        return Observable<User?>.create { observer in
+        
+        let cacheKey = "userInfo"
+        let remoteValues =  Observable<User?>.create { observer in
             self.getUserSettings(result: { settings in
                 
                 if settings != nil {
                     if let userStats = getUserStats(userId: settings!.slugId) {
                         settings!.setUserStats(watchedShows: userStats.watchedShows, watchedEpisodes: userStats.watchedEpisodes, duration: userStats.duration)
+                    }
+                    
+                    if let cache = Configuration.getRequestsCache() {
+                        
+                        let mapper = Mapper<User>()
+                        let strJSON = mapper.toJSONString(settings!)! as NSString
+                        cache.setObject(strJSON as NSString, forKey: cacheKey, expires: .seconds(Constants.requestsCacheTTL))
+                        
                     }
                 }
                 
@@ -132,6 +142,17 @@ final class RestAPI {
             })
             
             return Disposables.create()
+        }
+        
+        if let cache = Configuration.getRequestsCache(),
+            let data = cache.object(forKey: cacheKey) {
+            
+            let mapper = Mapper<User>()
+            let userInfo = mapper.map(JSONString: data as String)!
+            
+            return Observable.just(userInfo).concat(remoteValues)
+        } else {
+            return remoteValues
         }
     }
     
@@ -193,7 +214,6 @@ final class RestAPI {
     }
     
     static func getAllShows(useCache: Bool) -> Observable<[WatchedShow]> {
-        
         
         let cacheKey = "allShows"
         let remoteValues = Observable<[WatchedShow]>.create { observer in
