@@ -11,6 +11,8 @@ import RxSwift
 
 class SeriesListTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
 
+    @IBOutlet weak var btnFilter: UIBarButtonItem!
+    
     var watchedShows = [WatchedShow]()
     var filteredShows = [WatchedShow]()
     var filtered = true
@@ -106,7 +108,9 @@ class SeriesListTableViewController: UITableViewController, UISearchResultsUpdat
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        let watchedShow = sender as! WatchedShow
+        let viewController = segue.destination as! EpisodeTableViewController
+        viewController.watchedShow = watchedShow
     }
     
     private func filterShows() {
@@ -119,6 +123,7 @@ class SeriesListTableViewController: UITableViewController, UISearchResultsUpdat
             filterShows()
         }
         
+        btnFilter.title = "Filtro: " + (filtered ? "on" : "off")
         tableView.reloadData()
     }
 }

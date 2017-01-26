@@ -319,6 +319,8 @@ final class RestAPI {
         
         return Episode()
     }
+    
+    //Add to history
 }
 
 extension URLSession {
