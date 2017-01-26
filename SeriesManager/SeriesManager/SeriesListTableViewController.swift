@@ -12,24 +12,27 @@ import RxSwift
 class SeriesListTableViewController: UITableViewController {
 
     var watchedShows = [WatchedShow]()
-    private let cellIdentifier = "showCell"
+    private let cellIdentifier = "calendarCell"
     private let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadCalendars()
+        refreshControl?.addTarget(self, action: #selector(loadWatchedShows), for: .valueChanged)
+        loadWatchedShows(useCache: true)
     }
 
-    private func loadCalendars() {
-        RestAPI.getWatchedShows2().observeOn(MainScheduler.instance)
+    @objc
+    private func loadWatchedShows(useCache: Bool = false) {
+        RestAPI.getAllShows(useCache: useCache).observeOn(MainScheduler.instance)
         .subscribe(
             onNext: {
                 self.watchedShows = $0
                 self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
         },
             onError: { err in
-                //TODO: fodeu
+                self.refreshControl?.endRefreshing()
         }).addDisposableTo(bag)
     }
 
@@ -42,17 +45,28 @@ class SeriesListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return watchedShows.count
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return watchedShows[indexPath.row].nextEpisode == nil ? 44 : 80
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-            ?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? CalendarTableViewCell
+            ?? UINib(nibName: "CalendarTableViewCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! CalendarTableViewCell
         let watchedShow = watchedShows[indexPath.row]
 
-        cell.textLabel?.text = watchedShow.show.title
-        print("\(watchedShow.show.title) - \(watchedShow.progress)%")
-        if watchedShow.nextEpisode != nil {
-            print(String(format: "S%02dE%02d - %@", watchedShow.nextEpisode.season, watchedShow.nextEpisode.number, watchedShow.nextEpisode.title))
-            print("Date: \(Util.stringFromDate(watchedShow.nextEpisode.firstAired))")
+        cell.lblTitle.text = watchedShow.show.title
+        
+        if watchedShow.nextEpisode == nil {
+            cell.lblDate.isHidden = true
+            cell.lblEpisode.isHidden = true
+            cell.lblProgress.text =  "100%"
+        } else {
+            cell.lblDate.isHidden = false
+            cell.lblEpisode.isHidden = false
+            cell.lblDate.text = Util.formatDate(watchedShow.nextEpisode.firstAired)
+            cell.lblEpisode.text = String(format: "S%02dE%02d - %@", watchedShow.nextEpisode.season, watchedShow.nextEpisode.number, watchedShow.nextEpisode.title)
+            cell.lblProgress.text =  "\(watchedShow.progress!)%"
         }
 
         return cell

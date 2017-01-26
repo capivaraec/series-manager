@@ -9,6 +9,7 @@
 import Foundation
 import ObjectMapper
 import RxSwift
+import AwesomeCache
 
 final class RestAPI {
 
@@ -74,34 +75,56 @@ final class RestAPI {
     static private func addRequestHeaders(_ request: URLRequest) -> URLRequest {
         var newRequest = request
         let accessToken = Configuration.getAccessToken()!
-// a1c90b5a53fa2659dfe91d62fd4be0cc1cc62169a9a1a1decbb209efd22a5e77
+
         newRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         newRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         newRequest.addValue("2", forHTTPHeaderField: "trakt-api-version")
-        newRequest.addValue("f36eefe52b427fd2ed0fb2605fa3f938e2685c49785ddb00c4a2701c375bc2bc", forHTTPHeaderField: "trakt-api-key")
+        newRequest.addValue(clientID, forHTTPHeaderField: "trakt-api-key")
 
         return newRequest
     }
     
-    static func getWatchedShows2() -> Observable<[WatchedShow]> {
-        return Observable<[WatchedShow]>.create { observer in
-            self.getWatchedShows(result: { watchedShows in
-                
-                let newArray = watchedShows!.map { watched -> WatchedShow in
-                    let show = getWatchedProgress(watchedShow: watched)
-                    if show.nextEpisode != nil {
-                        show.nextEpisode = getEpisode(showId: show.show.ids.slug, season: show.nextEpisode.season, number: show.nextEpisode.number)
+    static func getAllShows(useCache: Bool) -> Observable<[WatchedShow]> {
+        
+        let cacheKey = "allShows"
+        
+        if useCache,
+            let cache = Configuration.getRequestsCache(),
+            let data = cache.object(forKey: cacheKey) {
+            
+            let mapper = Mapper<WatchedShow>()
+            let shows = mapper.mapArray(JSONString: data as String)!
+            
+            return Observable.just(shows)
+            
+        } else {
+            return Observable<[WatchedShow]>.create { observer in
+                self.getWatchedShows(result: { watchedShows in
+                    
+                    let newArray = watchedShows!.map { watched -> WatchedShow in
+                        let show = getWatchedProgress(watchedShow: watched)
+                        if show.nextEpisode != nil {
+                            show.nextEpisode = getEpisode(showId: show.show.ids.slug, season: show.nextEpisode.season, number: show.nextEpisode.number)
+                        }
+                        
+                        return show
                     }
                     
-                    return show
-                }
+                    if let cache = Configuration.getRequestsCache() {
+                        
+                        let mapper = Mapper<WatchedShow>()
+                        let strJSON = mapper.toJSONString(newArray)! as NSString
+                        cache.setObject(strJSON as NSString, forKey: cacheKey, expires: .seconds(Constants.requestsCacheTTL))
+                        
+                    }
+                    
+                    observer.onNext(newArray)
+                    observer.onCompleted()
+                })
                 
-                observer.onNext(newArray)
-                observer.onCompleted()
-            })
-            
-            return Disposables.create()
+                return Disposables.create()
             }
+        }
     }
 
     static func getWatchedShows(result: @escaping (_ shows: [WatchedShow]?) -> Void) {

@@ -22,10 +22,14 @@ class WatchedShow: Mappable {
     }
 
     func mapping(map: Map) {
-        self.completed <- map["completed"]
-        self.aired <- map["aired"]
-        self.show <- map["show"]
-        self.nextEpisode <- map["next_episode"]
+        completed <- map["completed"]
+        aired <- map["aired"]
+        show <- map["show"]
+        nextEpisode <- map["next_episode"]
+        
+        if completed != nil && aired != nil {
+            progress = completed * 100 / aired
+        }
     }
 
     func setProgress(completed: Int, aired: Int) {

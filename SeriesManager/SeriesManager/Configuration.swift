@@ -8,10 +8,12 @@
 
 import Foundation
 import Locksmith
+import AwesomeCache
 
 final class Configuration: Any {
 
     private static let userAccount = "SeriesManagerAccount"
+    private static let cacheKey = "SeriesManagerCache"
 
     static func getAccessToken() -> String? {
         let dict = Locksmith.loadDataForUserAccount(userAccount: userAccount)
@@ -25,9 +27,17 @@ final class Configuration: Any {
     static func revokeAuthorization() {
         try? Locksmith.deleteDataForUserAccount(userAccount: userAccount)
     }
+    
+    static func getRequestsCache() -> Cache<NSString>? {
+        return try? Cache<NSString>(name: cacheKey)
+    }
 }
 
 final class Util: Any {
+    
+    static func formatDate(_ strDate: String) -> String {
+        return stringFromDate(dateFromString(strDate))
+    }
 
     static func stringFromDate(_ date: Date) -> String {
 
@@ -44,4 +54,9 @@ final class Util: Any {
         
         return dateFormatter.date(from: strDate)!
     }
+}
+
+final class Constants: Any {
+    
+    static let requestsCacheTTL: TimeInterval = 60 * 5 // 5 minutes
 }
