@@ -333,7 +333,41 @@ final class RestAPI {
         }
     }
     
-    //Add to history
+    static func watchEpisode(_ episode: Episode) -> Observable<Void> {
+        return Observable<Void>.create { observer in
+            
+            episode.overview = ""
+            
+            var request = URLRequest(url: URL(string: "https://api.trakt.tv/sync/history")!)
+            let postParams = ["episodes" : [
+                ["ids" :
+                    ["trakt" : episode.ids.trakt,
+                     "imdb" : episode.ids.imdb,
+                     "tmdb" : episode.ids.tmdb,
+                     "tvrage" : episode.ids.tvrage,
+                     "tvdb" : episode.ids.tvdb]
+                ]]
+            ]
+            
+            let json = try! JSONSerialization.data(withJSONObject: postParams)
+            
+            request.httpBody = json
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            request.httpMethod = "POST"
+            request = addRequestHeaders(request)
+            
+            let task: URLSessionDataTask = URLSession.shared.dataTask(with: request) { (_, _, _) -> Void in
+                
+                observer.onNext()
+                observer.onCompleted()
+            }
+            
+            task.resume()
+            
+            return Disposables.create()
+        }
+    }
 }
 
 extension URLSession {

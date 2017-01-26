@@ -53,7 +53,7 @@ class EpisodeTableViewController: UITableViewController {
     
     private func loadEpisode(number: Int) {
         RestAPI.getEpisode(showId: watchedShow.show.ids.slug, season: currentEpisode.season, number: number).observeOn(MainScheduler.instance)
-            .subscribe( onNext: { episode in
+            .subscribe(onNext: { episode in
                 if episode.title != nil {
                     self.currentEpisode = episode
                 } else {
@@ -61,8 +61,7 @@ class EpisodeTableViewController: UITableViewController {
                 }
                 
                 self.setupUI()
-            }
-            ).addDisposableTo(bag)
+            }).addDisposableTo(bag)
     }
 
     @IBAction func btnPreviousTouched(_ sender: Any) {
@@ -80,6 +79,10 @@ class EpisodeTableViewController: UITableViewController {
     }
     
     @IBAction func btnWatchedTouched(_ sender: Any) {
+        RestAPI.watchEpisode(currentEpisode).observeOn(MainScheduler.instance)
+            .subscribe(onNext: {
+                self.btnNextTouched(self)
+            }).addDisposableTo(bag)
     }
 
 }

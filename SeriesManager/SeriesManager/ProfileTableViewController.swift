@@ -41,24 +41,6 @@ class ProfileTableViewController: UITableViewController {
                         self.watchedTime.text = "\(duration.days) dias, \(duration.hours) horas e \(duration.minutes) minutos assistidos"
                         self.userAvatar.sd_setImage(with: URL(string:userSettings.avatarUrl)!)
                     }
-            },
-                onError: { err in
-                    //TODO: fodeu
             }).addDisposableTo(bag)
-    }
-    
-    private func logout() {
-//        self.tabBarController?.showInfiniteProgress(fullScreen: true)
-        RestAPI.revokeToken { (success) in
-            if success {
-                AppController.didLogout()
-            }
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 2 {
-            logout()
-        }
     }
 }
