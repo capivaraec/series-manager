@@ -320,6 +320,17 @@ final class RestAPI {
         return Episode()
     }
     
+    static func getEpisode(showId: String, season: Int, number: Int) -> Observable<Episode> {
+        return Observable<Episode>.create { observer in
+            
+            let episode: Episode = getEpisode(showId: showId, season: season, number: number)
+            observer.onNext(episode)
+            observer.onCompleted()
+            
+            return Disposables.create()
+        }
+    }
+    
     //Add to history
 }
 

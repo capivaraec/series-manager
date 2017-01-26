@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class EpisodeTableViewController: UITableViewController {
 
@@ -17,27 +18,46 @@ class EpisodeTableViewController: UITableViewController {
     @IBOutlet weak var lblOverview: UILabel!
     
     var watchedShow: WatchedShow!
+    var currentEpisode: Episode!
+    private var bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentEpisode = watchedShow.nextEpisode
         setupUI()
     }
     
     private func setupUI() {
         title = watchedShow.show.title
-        lblTitle.text = watchedShow.nextEpisode.title
-        lblEpisodeNumber.text = "\(watchedShow.nextEpisode.season!)ª temporada, episódio \(watchedShow.nextEpisode.number!)"
-        lblDate.text = Util.formatDate(watchedShow.nextEpisode.firstAired)
-        lblOverview.text = watchedShow.nextEpisode.overview
+        
+        lblTitle.text = currentEpisode.title
+        lblEpisodeNumber.text = "\(currentEpisode.season!)ª temporada, episódio \(currentEpisode.number!)"
+        lblDate.text = Util.formatDate(currentEpisode.firstAired)
+        lblOverview.text = currentEpisode.overview
         
         tableView.tableFooterView = UIView()
     }
+    
+    private func loadEpisode(number: Int) {
+        RestAPI.getEpisode(showId: watchedShow.show.ids.slug, season: currentEpisode.season, number: number).observeOn(MainScheduler.instance)
+            .subscribe( onNext: { episode in
+                self.currentEpisode = episode
+                self.setupUI()
+            }
+            ).addDisposableTo(bag)
+    }
 
     @IBAction func btnPreviousTouched(_ sender: Any) {
+        let number = currentEpisode.number - 1
+        
+        loadEpisode(number: number)
     }
     
     @IBAction func btnNextTouched(_ sender: Any) {
+        let number = currentEpisode.number + 1
+        
+        loadEpisode(number: number)
     }
     
     @IBAction func btnWatchedTouched(_ sender: Any) {
