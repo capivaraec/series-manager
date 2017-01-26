@@ -13,6 +13,6 @@ class CalendarTableViewCell: UITableViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblEpisode: UILabel!
     @IBOutlet weak var lblDate: UILabel!
-    @IBOutlet weak var lblWatched: UILabel!
+    @IBOutlet weak var lblProgress: UILabel!
     
 }
