@@ -9,3 +9,14 @@ Ao selecionar uma série serão apresentadas as informações do próximo episó
 Na aba perfil constarão algumas estatísticas a respeito das séries que o usuário já assistiu.
 
 Após as requisições da listagem das séries e do perfil os dados são cacheados. Na próxima vez que o app for aberto, primeiramente os dados serão carregados do cache, enquanto uma requisição é feita em background por dados mais atualizados. Assim que essa requisição termina, a tela é atualizada.
+
+
+Funcionalidades implementadas:
+
+Uma lista das séries que ele está assistindo no momento;
+A informação de quantos por cento da séria já foi concluída;
+Qual o próximo episódio (e a data);
+Uma página com as informações dos episódios (podendo navegar entre os episódios da mesma temporada);
+Marcar como assistido um episódio;
+Tela do perfil;
+Listagem das séries e perfil disponíveis offline.
